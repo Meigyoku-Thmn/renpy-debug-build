@@ -17,6 +17,10 @@ How to run Renpy project using Python directly
 Use this command::
 
     <renpy_dir_path>/lib/windows-x86_64/python <renpy_dir_path>/renpy.py <renpy_project_dir_path>
+    
+Debugging using PyCharm
+-----------------------
+PyCharm uses a feature called "Cython Speedups" to increase debugging performance. Unfortunately, it's not compatible with this build, so you need to add the environment variable :code:`PYDEVD_USE_CYTHON=NO`.
 
 ----
 
