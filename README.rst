@@ -22,7 +22,7 @@ Debugging using PyCharm
 -----------------------
 PyCharm uses a feature called "Cython Speedups" to increase debugging performance. Unfortunately, it's not compatible with this build, so you need to add the environment variable :code:`PYDEVD_USE_CYTHON=NO`.
 
-Setting breakpoints to python file
+Enable setting breakpoints to python file
 ----------------------------------
 Open :code:`<renpy_dir>/renpy/loader.py`, find the :code:`load_module` method, then modify it (from :code:`file_obj = load(filename)`) like this:
 
@@ -64,7 +64,7 @@ Open :code:`<renpy_dir>/renpy/loader.py`, find the :code:`load_module` method, t
 
         return sys.modules[fullname]
 
-Setting breakpoints to renpy file
+Enable setting breakpoints to renpy file
 ---------------------------------
 Currently I don't know any way to do it.
 
