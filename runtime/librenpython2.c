@@ -287,7 +287,7 @@ int EXPORT renpython_main(int argc, char **argv) {
     take_argv0(argv[0]);
     search_python_home();
 
-    Py_OptimizeFlag = 0;
+    Py_OptimizeFlag = 1;
     Py_NoUserSiteDirectory = 1;
 
     init_librenpy();
@@ -352,7 +352,7 @@ int EXPORT launcher_main(int argc, char **argv) {
     }
 
     // Set up the Python flags.
-    Py_OptimizeFlag = 0;
+    Py_OptimizeFlag = 1;
     Py_IgnoreEnvironmentFlag = 1;
     Py_NoUserSiteDirectory = 1;
 
