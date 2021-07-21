@@ -1,19 +1,22 @@
 from renpybuild.model import task
 import shutil
 
-def copy_py_pyo(src, dst):
+def copy_py_pyd_pyo(src, dst):
     """
-    Copies the py, pyo and pem files from `src` to `dst`.
+    Copies the py, pyd, pyo and pem files from `src` to `dst`.
 
     `src` and `dst` may be either directories or files.
     """
     
     if src.is_dir():
         for i in src.iterdir():
-            copy_py_pyo(i, dst / i.name)
+            copy_py_pyd_pyo(i, dst / i.name)
         return
 
-    if not (str(src).endswith(".py") or str(src).endswith(".pyo") or str(src).endswith(".pem")):
+    if not (str(src).endswith(".py")
+         or str(src).endswith(".pyd")
+         or str(src).endswith(".pyo")
+         or str(src).endswith(".pem")):
         return
 
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -28,15 +31,15 @@ def python2(c):
     
     src_dir_path = c.path("{{ install }}/lib/{{ pythonver }}");
     dst_dir_path = c.path("{{ distlib }}/{{ pythonver }}");
-    copy_py_pyo(src_dir_path, dst_dir_path)                                                            # copy the entire python lib
+    copy_py_pyd_pyo(src_dir_path, dst_dir_path)                                                            # copy the entire python lib
     
     src_dir_path = c.path("{{ pytmp }}/pyjnius/jnius");
     dst_dir_path = c.path("{{ distlib }}/{{ pythonver }}/jnius");
-    copy_py_pyo(src_dir_path, dst_dir_path)                                                            # copy jnius
+    copy_py_pyd_pyo(src_dir_path, dst_dir_path)                                                            # copy jnius
     
     src_dir_path = c.path("{{ pytmp }}/pyobjus/pyobjus");
     dst_dir_path = c.path("{{ distlib }}/{{ pythonver }}/pyobjus");
-    copy_py_pyo(src_dir_path, dst_dir_path)                                                            # copy pyobjus
+    copy_py_pyd_pyo(src_dir_path, dst_dir_path)                                                            # copy pyobjus
     
     c.run("mkdir -p {{ distlib }}/{{ pythonver }}/lib-dynload")
     with open(c.path("{{ distlib }}/{{ pythonver }}/lib-dynload/empty.txt"), "w") as f:
