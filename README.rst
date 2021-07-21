@@ -1,3 +1,25 @@
+About this fork
+===============
+This fork enables you to attach your favourite Python debugger into Renpy. For now this is intended for Windows user.
+
+Shortcut to build and deploy
+----------------------------
+Run this command::
+
+    sudo sh ./deploy-renpy-win-64.sh <target_dir>
+
+Where <target_dir> is the directory path which the renpy content should be copied into. For example::
+
+    sudo sh ./deploy-renpy-win-64.sh /mnt/d/renpy-debug
+
+How to run Renpy project using Python directly 
+----------------------------------------------
+Use this command::
+
+    <renpy_dir_path>/lib/windows-x86_64/python <renpy_dir_path>/renpy.py <renpy_project_dir_path>
+
+----
+
 Ren'Py Build
 ============
 
