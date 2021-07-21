@@ -22,6 +22,52 @@ Debugging using PyCharm
 -----------------------
 PyCharm uses a feature called "Cython Speedups" to increase debugging performance. Unfortunately, it's not compatible with this build, so you need to add the environment variable :code:`PYDEVD_USE_CYTHON=NO`.
 
+Setting breakpoints to python file
+----------------------------------
+Open :code:`<renpy_dir>/renpy/loader.py`, find the :code:`load_module` method, then modify it (from :code:`file_obj = load(filename)`) like this:
+
+.. code-block:: python
+
+    def load_module(self, fullname):
+
+        filename = self.translate(fullname, self.prefix)
+
+        pyname = pystr(fullname)
+
+        mod = sys.modules.setdefault(pyname, types.ModuleType(pyname))
+        mod.__name__ = pyname
+        mod.__file__ = filename
+        mod.__loader__ = self
+
+        if filename.endswith("__init__.py"):
+            mod.__path__ = [ filename[:-len("__init__.py")] ]
+
+        for encoding in [ "utf-8", "latin-1" ]:
+
+            try:
+
+                file_obj = load(filename) # keep a file object
+                source = file_obj.read().decode(encoding)
+                if source and source[0] == u'\ufeff':
+                    source = source[1:]
+                source = source.encode("raw_unicode_escape")
+                source = source.replace(b"\r", b"")
+
+                # get full file path from the file object, allowing a Python debugger to set breakpoints
+                code = compile(source, file_obj.name, 'exec', renpy.python.old_compile_flags, 1)
+                break
+            except:
+                if encoding == "latin-1":
+                    raise
+
+        exec(code, mod.__dict__)
+
+        return sys.modules[fullname]
+
+Setting breakpoints to renpy file
+---------------------------------
+Currently I don't know any way to do it.
+
 ----
 
 Ren'Py Build
